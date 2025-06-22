@@ -12,5 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/emoji")
 @RequiredArgsConstructor
 public class EmojiController {
-    
+    private final EmojiUploadService emojiUploadService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void UploadEmoji(@RequestPart(name = "file") MultipartFile file,
+                            @RequestPart(name = "request") @Valid EmojiRequest request) {
+        emojiUploadService.execute(request, file);
+    }
 }
