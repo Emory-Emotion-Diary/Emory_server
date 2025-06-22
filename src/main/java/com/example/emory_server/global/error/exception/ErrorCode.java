@@ -34,6 +34,9 @@ public enum ErrorCode {
     //emoji
     EMOJI_NOT_FOUND(404, "이모지 찾지 못함"),
 
+    //diary
+    DIARY_NOT_FOUND(404, "일기 찾지 못함"),
+
     // general
     BAD_REQUEST(400, "프론트 탓"),
     INTERNAL_SERVER_ERROR(500, "서버 탓");
