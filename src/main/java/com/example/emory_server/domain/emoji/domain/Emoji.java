@@ -1,12 +1,16 @@
 package com.example.emory_server.domain.emoji.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Emoji {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
