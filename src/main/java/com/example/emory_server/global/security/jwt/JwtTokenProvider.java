@@ -29,13 +29,18 @@ public class JwtTokenProvider {
     private final CustomUserDetailsService customUserDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
 
+    private static final String ACCESS_TOKEN = "access";
+    private static final String REFRESH_TOKEN = "refresh";
+    private static final String CLAIM_TYPE = "type";
+    private static final String CLAIM_USER_SECRET = "user";
+
     // Access Token 생성
     private String createAccessToken(String accountId) {
         Date now = new Date();
 
         return Jwts.builder()
                 .setSubject(accountId)
-                .claim("type", "access")
+                .claim(CLAIM_TYPE, ACCESS_TOKEN)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + jwtProperties.getAccessExpiration() * 1000))
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
@@ -47,7 +52,7 @@ public class JwtTokenProvider {
         Date now = new Date();
 
         String refreshToken = Jwts.builder()
-                .claim("type", "refresh")
+                .claim(CLAIM_TYPE, REFRESH_TOKEN)
                 .setSubject(accountId)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + jwtProperties.getRefreshExpiration() * 1000))
@@ -69,7 +74,10 @@ public class JwtTokenProvider {
     public Authentication getAuthentication(String token) {
         Claims claims = getClaims(token);
 
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(claims.getSubject());
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(
+                claims.getSubject() + ":" + claims.get(CLAIM_USER_SECRET)
+        );
+
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
