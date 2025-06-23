@@ -17,7 +17,7 @@ public class DiaryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void CreateDiary(@RequestBody @Valid DiaryRequest request) {
+    public void createDiary(@RequestBody @Valid DiaryRequest request) {
         createDiaryService.execute(request);
     }
 
