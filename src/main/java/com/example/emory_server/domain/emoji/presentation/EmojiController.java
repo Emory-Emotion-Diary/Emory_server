@@ -19,14 +19,14 @@ public class EmojiController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void UploadEmoji(@RequestPart(name = "file") MultipartFile file,
+    public void uploadEmoji(@RequestPart(name = "file") MultipartFile file,
                             @RequestPart(name = "request") @Valid EmojiRequest request) {
         emojiUploadService.execute(request, file);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void DeleteEmoji(@RequestBody @Valid DeleteEmojiRequest request) {
+    public void deleteEmoji(@RequestBody @Valid DeleteEmojiRequest request) {
         emojiDeleteService.execute(request);
     }
 }
