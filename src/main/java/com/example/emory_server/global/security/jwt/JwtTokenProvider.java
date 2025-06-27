@@ -75,8 +75,7 @@ public class JwtTokenProvider {
         Claims claims = getClaims(token);
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(
-                claims.getSubject() + ":" + claims.get(CLAIM_USER_SECRET)
-        );
+                claims.getSubject());
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
