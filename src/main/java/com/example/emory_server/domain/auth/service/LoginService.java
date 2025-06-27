@@ -37,7 +37,7 @@ public class LoginService {
             throw PasswordMismatchException.EXCEPTION;
         }
 
-        return jwtTokenProvider.receiveToken(String.valueOf(user.getId()));
+        return jwtTokenProvider.receiveToken(user.getAccountId());
     }
 
     private TokenResponse registerAndLoginNewUser(LoginRequest request) {
@@ -54,6 +54,6 @@ public class LoginService {
 
         userRepository.save(newUser);
 
-        return jwtTokenProvider.receiveToken(String.valueOf(newUser.getId()));
+        return jwtTokenProvider.receiveToken(xquareUser.getAccountId());
     }
 }
