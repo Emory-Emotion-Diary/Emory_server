@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface DiaryRepository extends CrudRepository<Diary, Long> {
+    Optional<Diary> findByUserId(Long userId);
 
     List<Diary> findByUserIdAndDateBetween(Long userId, LocalDate start, LocalDate end);
 }
