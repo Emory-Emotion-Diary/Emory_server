@@ -29,6 +29,7 @@ public class CreateDiaryService {
         diaryRepository.save(Diary.builder()
                         .content(request.getContent())
                         .emoji(emoji)
+                        .user(user)
                 .build());
     }
 }
