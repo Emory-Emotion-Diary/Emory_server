@@ -1,6 +1,7 @@
 package com.example.emory_server.domain.diary.domain;
 
 import com.example.emory_server.domain.emoji.domain.Emoji;
+import com.example.emory_server.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,4 +33,8 @@ public class Diary {
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
 }
