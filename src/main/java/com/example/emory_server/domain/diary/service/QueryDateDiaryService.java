@@ -17,13 +17,14 @@ public class QueryDateDiaryService {
     private final UserFacade userFacade;
 
     @Transactional(readOnly = true)
-    public DiaryResponse execute(Long diaryId) {
+    public DiaryResponse execute() {
         User user = userFacade.currentUser();
 
-        Diary diary = diaryRepository.findById(diaryId)
+        Diary diary = diaryRepository.findByUserId(user.getId())
                 .orElseThrow(() -> DiaryNotFoundException.EXCEPTION);
 
         return DiaryResponse.builder()
+                .id(diary.getId())
                 .content(diary.getContent())
                 .date(diary.getDate())
                 .emojiName(diary.getEmoji().getName())
