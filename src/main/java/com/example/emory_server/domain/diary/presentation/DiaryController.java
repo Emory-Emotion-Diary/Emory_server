@@ -5,10 +5,13 @@ import com.example.emory_server.domain.diary.presentation.dto.response.DiaryResp
 import com.example.emory_server.domain.diary.service.CreateDiaryService;
 import com.example.emory_server.domain.diary.service.DeleteDiaryService;
 import com.example.emory_server.domain.diary.service.QueryDateDiaryService;
+import com.example.emory_server.domain.diary.service.QueryMonthDiaryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/diary")
@@ -17,6 +20,7 @@ public class DiaryController {
     private final CreateDiaryService createDiaryService;
     private final DeleteDiaryService deleteDiaryService;
     private final QueryDateDiaryService queryDateDiaryService;
+    private final QueryMonthDiaryService queryMonthDiaryService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -30,9 +34,15 @@ public class DiaryController {
         deleteDiaryService.execute(diaryId);
     }
 
-    @GetMapping("/{diary-id}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public DiaryResponse queryDiary(@PathVariable Long diaryId) {
-        return queryDateDiaryService.execute(diaryId);
+    public DiaryResponse queryDiary() {
+        return queryDateDiaryService.execute();
+    }
+
+    @GetMapping("/month")
+    @ResponseStatus(HttpStatus.OK)
+    public List<DiaryResponse> queryDiaryByMonth() {
+        return queryMonthDiaryService.execute();
     }
 }
